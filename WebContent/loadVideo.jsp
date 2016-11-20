@@ -59,9 +59,17 @@ input {
 						<input class="form-control" type="text" name="documentName"
 							id='documenFileName' disabled />
 					</div>
+					<div class="col-xs-4">
+						<p  class="" type="text" name="documentName"
+							id='message'  > </p>
+					</div>
+					<div class="col-xs-4">
+						<p class="" type="text" name="documentName"
+							id='log' ><p>
+					</div>
 					<div class="col-xs-3">
 						<div class="input-group">
-							<button type="submit" class="btn btn-default" id="createDocument">Procesar
+							<button type="submit" class="btn btn-default" id="proccessVideo">Procesar
 								video</button>
 						</div>
 					</div>

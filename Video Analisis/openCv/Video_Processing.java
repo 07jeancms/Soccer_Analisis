@@ -1,13 +1,9 @@
 package openCv;
 
 import static com.googlecode.javacv.cpp.opencv_highgui.CV_CAP_PROP_FRAME_COUNT;
-import static com.googlecode.javacv.cpp.opencv_highgui.CV_WINDOW_AUTOSIZE;
-import static com.googlecode.javacv.cpp.opencv_highgui.cvNamedWindow;
 
 import java.awt.FlowLayout;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -15,18 +11,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 
 import javax.imageio.ImageIO;
-import javax.swing.DefaultDesktopManager;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.Core;
 import org.opencv.core.MatOfByte;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
@@ -35,9 +28,6 @@ import org.opencv.highgui.VideoCapture;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.videoio.VideoWriter;
 import org.opencv.videoio.Videoio;
-
-import com.googlecode.javacv.FrameGrabber;
-import com.googlecode.javacv.OpenCVFrameGrabber;
 
 public class Video_Processing {
 	
@@ -65,13 +55,16 @@ public class Video_Processing {
 		try{
 			// Load the video file into the capture
 			VideoCapture video = new VideoCapture(videoName);
-			
+			System.out.println(video.isOpened());
+			File nFile = new File(videoName);
+			System.out.println(nFile.length());
 			if(video.isOpened())
 				isOpen = true;
 			
 		}catch(Exception ex){
 			
 			isOpen = false;
+			ex.printStackTrace();
 		}
 		return isOpen;
 		
@@ -112,11 +105,12 @@ public class Video_Processing {
 	 */
 	public ArrayList<Mat> readFrames(){
 		
-		//System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
 		if(videoIsOpen()){
 			// Load the video file into the capture
 			VideoCapture videoCap = new VideoCapture(videoName);
+			
 			videoCapture = videoCap;
 
 		    double amountOfFrames = videoCap.get(CV_CAP_PROP_FRAME_COUNT); //get the frame count
@@ -217,7 +211,6 @@ public class Video_Processing {
 	 * @param pHSVarrayList
 	 * @return
 	 */
-	
 	public ArrayList<Mat> getHlayer(ArrayList<Mat> pHSVarrayList){
 		int amountOfMats = pHSVarrayList.size();
 		ArrayList<Mat> hArrayList = new ArrayList<>();
@@ -380,11 +373,6 @@ public class Video_Processing {
 	//======================================================================
 	
 	public void writeFrame(ArrayList<Mat> pArrayList) {
-		String fileName = "C:/myVideo.avi";
-		final int fourCC= new VideoWriter().fourcc('H','2','6','4');
-		int fps = 20;
-		Size frameSize=new Size((int)videoCapture.get(Videoio.CAP_PROP_FRAME_WIDTH),(int)videoCapture.get(Videoio.CAP_PROP_FRAME_HEIGHT));
-		videoWriter = new VideoWriter(fileName, fourCC, fps, frameSize);
 		int pArrayListSize = pArrayList.size();
 		for(int actualFrame = 0; actualFrame < pArrayListSize; actualFrame++){
 			videoWriter.write((pArrayList.get(actualFrame)));
@@ -403,7 +391,7 @@ public class Video_Processing {
 		try {
 			String fileName = "C:/myVideo.avi";
 			//int fcc = CV_FOURCC('D', 'I', 'V', '3');
-			final int fourCC= new VideoWriter().fourcc('H','2','6','4');
+			final int fourCC= new VideoWriter().fourcc('D', 'I','V', '3');
 			int fps = 20;
 			Size frameSize=new Size((int)videoCapture.get(Videoio.CAP_PROP_FRAME_WIDTH),(int)videoCapture.get(Videoio.CAP_PROP_FRAME_HEIGHT));
 			videoWriter = new VideoWriter(fileName, fourCC, fps, frameSize);
@@ -418,6 +406,3 @@ public class Video_Processing {
 		}
 	}
 }
-
-
-
