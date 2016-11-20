@@ -42,27 +42,20 @@ $(document)
 
 $('.btn-file input').change(function() {
 	var fileName = this.value.split(/[\/\\]/).pop();
-	$('#createDocument').addClass('btn-success').removeClass('btn-default');
+	$('#proccessVideo').addClass('btn-success').removeClass('btn-default');
 	$('#documenFileName').val(fileName);
 });
 // pre-submit callback
 function beforeSubmit(arr, $form, options) {
-	alert("We are going to do it");
 
 }
 
 // post-submit callback
 function showResponse(response) {
-	alert(response);
-	/*if (!data.success) {
-		var errorMessage = data.message != null ? data.message
-				: "Lo lamentamos pero ha ocurrido un error.";
-		alertModal(errorMessage);
-		closeMessageModal();
-	} else {
-		closeMessageModal();
-		alertModal(data.message);
-	}*/
+	$('#message').text(response);
+	$('#log').text(response);
+	//alert(response);
+	
 }
 
 var loadVideoModule = angular.module('loadVideoModule', []);
